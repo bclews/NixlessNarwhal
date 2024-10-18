@@ -27,7 +27,7 @@ sudo apt-get install -y git >/dev/null
 echo "Cloning NixlessNarwhal..."
 rm -rf ~/.local/share/NixlessNarwhal
 # git clone https://github.com/bclews/NixlessNarwhal.git ~/.local/share/NixlessNarwhal >/dev/null
-git clone https://github.com/bclews/NixlessNarwhal.git ~/.local/share/NixlessNarwhal >/dev/null
+git clone git@github.com:bclews/NixlessNarwhal.git ~/.local/share/NixlessNarwhal >/dev/null
 
 echo "Installation starting..."
 source ~/.local/share/NixlessNarwhal/install.sh
