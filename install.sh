@@ -38,8 +38,6 @@ echo "Installing zsh and Oh My Zsh..."
 source install/required/zsh.sh
 
 echo "Installation starting..."
-# Check the distribution name and version and abort if incompatible
-source ~/.local/share/NixlessNarwhal/install/check-version.sh
 
 # Install terminal tools
 source ~/.local/share/NixlessNarwhal/install/terminal.sh
