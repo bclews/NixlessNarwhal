@@ -25,6 +25,9 @@ echo -e "\nBegin installation (or abort with ctrl+c)..."
 # Update package list
 sudo apt-get update >/dev/null
 
+echo "Moving home directory to a new location..."
+source install/required/move_home.sh
+
 echo "Installling required libraries..."
 source install/required/libraries.sh
 
