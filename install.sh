@@ -25,8 +25,8 @@ echo -e "\nBegin installation (or abort with ctrl+c)..."
 # Update package list
 sudo apt-get update >/dev/null
 
-# Stow is needed to manage dotfiles
-sudo apt-get install -y stow >/dev/null
+echo "Installling required libraries..."
+source install/required/libraries.sh
 
 echo "Configuring SSH keys, and sets up GitHub for cloning repositories via SSH..."
 source install/required/git-ssh.sh
