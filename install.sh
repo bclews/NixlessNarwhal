@@ -22,13 +22,17 @@ echo -e "$ascii_art"
 echo "=> NixlessNarwhal is for fresh Ubuntu 22.04 installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
+# Update package list
 sudo apt-get update >/dev/null
-sudo apt-get install -y git >/dev/null
 
-echo "Cloning NixlessNarwhal..."
-rm -rf ~/.local/share/NixlessNarwhal
-# git clone https://github.com/bclews/NixlessNarwhal.git ~/.local/share/NixlessNarwhal >/dev/null
-git clone git@github.com:bclews/NixlessNarwhal.git ~/.local/share/NixlessNarwhal >/dev/null
+# Stow is needed to manage dotfiles
+sudo apt-get install -y stow >/dev/null
+
+echo "Configuring SSH keys, and sets up GitHub for cloning repositories via SSH..."
+source install/required/git-ssh.sh
+
+echo "Installing zsh and Oh My Zsh..."
+source install/required/zsh.sh
 
 echo "Installation starting..."
 # Check the distribution name and version and abort if incompatible
