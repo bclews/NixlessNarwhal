@@ -19,10 +19,9 @@ ascii_art='
 '
 
 echo -e "$ascii_art"
-echo "=> NixlessNarwhal is for fresh Ubuntu 22.04 installations only!"
+echo "=> NixlessNarwhal is a tool to automate the setup of a new headless Ubuntu installation."
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
-# Update package list
 sudo apt-get update >/dev/null
 
 echo "Moving home directory to a new location..."
@@ -37,7 +36,5 @@ source install/required/git-ssh.sh
 echo "Installing zsh and Oh My Zsh..."
 source install/required/zsh.sh
 
-echo "Installation starting..."
-
-# Install terminal tools
-source ~/.local/share/NixlessNarwhal/install/terminal.sh
+echo "Installation apps..."
+for installer in install/apps/*.sh; do source $installer; done

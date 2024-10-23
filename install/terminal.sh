@@ -1,7 +1,0 @@
-# Needed for all installers
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt install -y curl git unzip npm
-
-# Run terminal installers
-for installer in ~/.local/share/NixlessNarwhal/install/terminal/*.sh; do source $installer; done
