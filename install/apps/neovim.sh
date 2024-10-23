@@ -1,4 +1,3 @@
-#!/bin/bash
 (
   cd /tmp || exit
   wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"

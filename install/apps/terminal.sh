@@ -1,1 +1,9 @@
-sudo apt install -y ripgrep bat zoxide plocate btop apache2-utils fd-find tldr
+sudo apt install -y \
+  apache2-utils \
+  bat \
+  btop \
+  fd-find \
+  plocate \
+  ripgrep \
+  tldr \
+  zoxide

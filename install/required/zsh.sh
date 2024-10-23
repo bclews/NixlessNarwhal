@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Install zsh
 sudo apt-get install zsh >/dev/null
 

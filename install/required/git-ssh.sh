@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # To use this script, you will need to generate a GitHub Personal Access Token (PAT)
 #   1. Go to GitHub Token Settings via https://github.com/settings/tokens
 #   2. Click "Generate new token" and give it a descriptive name (e.g., "SSH Key Script").

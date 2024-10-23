@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -e
-
 # Variables
 OLD_HOME="/home/cle126"
 NEW_HOME="/bc/cle126"
