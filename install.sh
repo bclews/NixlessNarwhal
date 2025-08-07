@@ -1,40 +1,43 @@
+#!/bin/bash
+
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-ascii_art='
-▄▀▀▄ ▀▄  ▄▀▀█▀▄   ▄▀▀▄  ▄▀▄  ▄▀▀▀▀▄     ▄▀▀█▄▄▄▄  ▄▀▀▀▀▄  ▄▀▀▀▀▄
-█  █ █ █ █   █  █ █    █   █ █    █     ▐  ▄▀   ▐ █ █   ▐ █ █   ▐
-▐  █  ▀█ ▐   █  ▐ ▐     ▀▄▀  ▐    █       █▄▄▄▄▄     ▀▄      ▀▄
-  █   █      █         ▄▀ █      █        █    ▌  ▀▄   █  ▀▄   █
-▄▀   █    ▄▀▀▀▀▀▄     █  ▄▀    ▄▀▄▄▄▄▄▄▀ ▄▀▄▄▄▄    █▀▀▀    █▀▀▀
-█    ▐   █       █  ▄▀  ▄▀     █         █    ▐    ▐       ▐
-▐        ▐       ▐ █    ▐      ▐         ▐
- ▄▀▀▄ ▀▄  ▄▀▀█▄   ▄▀▀▄▀▀▀▄  ▄▀▀▄    ▄▀▀▄  ▄▀▀▄ ▄▄   ▄▀▀█▄   ▄▀▀▀▀▄
-█  █ █ █ ▐ ▄▀ ▀▄ █   █   █ █   █    ▐  █ █  █   ▄▀ ▐ ▄▀ ▀▄ █    █
-▐  █  ▀█   █▄▄▄█ ▐  █▀▀█▀  ▐  █        █ ▐  █▄▄▄█    █▄▄▄█ ▐    █
-  █   █   ▄▀   █  ▄▀    █    █   ▄    █     █   █   ▄▀   █     █
-▄▀   █   █   ▄▀  █     █      ▀▄▀ ▀▄ ▄▀    ▄▀  ▄▀  █   ▄▀    ▄▀▄▄▄▄▄▄▀
-█    ▐   ▐   ▐   ▐     ▐            ▀     █   █    ▐   ▐     █
-▐                                         ▐   ▐              ▐
-'
+# Load configuration
+# shellcheck source=config.sh
+source ~/.local/share/NixlessNarwhal/config.sh
 
-echo -e "$ascii_art"
-echo "=> NixlessNarwhal is a tool to automate the setup of a new headless Ubuntu installation."
-echo -e "\nBegin installation (or abort with ctrl+c)..."
+# Give people a chance to retry running the installation
+trap 'echo "NixlessNarwhal installation failed! You can retry by running: source ~/.local/share/NixlessNarwhal/install.sh"' ERR
 
-sudo apt-get update >/dev/null
+# Check the distribution name and version and abort if incompatible
+# shellcheck source=install/check-version.sh
+source ~/.local/share/NixlessNarwhal/install/check-version.sh
 
-echo "Moving home directory to a new location..."
-source install/required/move-home.sh
+# Ask for app choices
+echo "Get ready to make a few choices..."
+# shellcheck source=install/required/gum.sh
+source ~/.local/share/NixlessNarwhal/install/required/gum.sh >/dev/null
+# shellcheck source=install/first-run-choices.sh
+source ~/.local/share/NixlessNarwhal/install/first-run-choices.sh
 
-echo "Installling required libraries..."
-source install/required/libraries.sh
+if [ "$HOME" != "$NEW_HOME" ]; then
+  echo "Moving home directory to a new location..."
+  # shellcheck source=install/required/move-home.sh
+  source ~/.local/share/NixlessNarwhal/install/required/move-home.sh
+fi
 
-echo "Configuring SSH keys, and sets up GitHub for cloning repositories via SSH..."
-source install/required/git-ssh.sh
+echo "Installing required libraries..."
+# shellcheck source=install/required/libraries.sh
+source ~/.local/share/NixlessNarwhal/install/required/libraries.sh
+
+# echo "Configuring SSH keys, and sets up GitHub for cloning repositories via SSH..."
+# source ~/.local/share/NixlessNarwhal/install/required/git-ssh.sh
 
 echo "Installing zsh and Oh My Zsh..."
-source install/required/zsh.sh
+# shellcheck source=install/required/zsh.sh
+source ~/.local/share/NixlessNarwhal/install/required/zsh.sh
 
-echo "Installation apps..."
-for installer in install/apps/*.sh; do source $installer; done
+echo "Installing apps..."
+# shellcheck disable=SC1090
+for installer in ~/.local/share/NixlessNarwhal/install/apps/*.sh; do source "$installer"; done

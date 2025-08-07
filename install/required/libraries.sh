@@ -1,4 +1,15 @@
+#!/bin/bash
+set -e
+
 sudo apt install -y \
   build-essential \
+  curl \
+  apache2-utils \
+  bat \
+  btop \
+  fd-find \
+  plocate \
+  ripgrep \
   stow \
-  curl
+  tldr \
+  zoxide >/dev/null
