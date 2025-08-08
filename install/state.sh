@@ -89,8 +89,8 @@ show_state() {
     echo "NixlessNarwhal Installation State:"
     echo "=================================="
     if [ -s "$STATE_FILE" ]; then
-        while IFS='=' read -r component status; do
-            if [ "$status" = "true" ]; then
+        while IFS='=' read -r component state_value; do
+            if [ "$state_value" = "true" ]; then
                 echo "✓ $component"
             fi
         done < "$STATE_FILE"
