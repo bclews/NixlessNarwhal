@@ -1,13 +1,25 @@
 #!/bin/bash
 set -e
 
-# Install mise first if not present
-if ! command -v mise &> /dev/null; then
-  echo "Installing mise..."
-  curl https://mise.run | sh >/dev/null 2>&1
-  export PATH="$HOME/.local/bin:$PATH"
-  # Reload shell to ensure mise is available
-  hash -r
+# Load state management functions if not already loaded
+if ! command -v command_exists >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
+# Check if mise is available (should be installed via apt by mise.sh)
+if ! command_exists mise; then
+    echo "Error: mise is not installed. This should have been installed by mise.sh"
+    exit 1
+fi
+
+# Determine mise path (prefer system install over local)
+if command -v /usr/bin/mise >/dev/null 2>&1; then
+    MISE_PATH="/usr/bin/mise"
+elif command -v "$HOME/.local/bin/mise" >/dev/null 2>&1; then
+    MISE_PATH="$HOME/.local/bin/mise"
+else
+    MISE_PATH="mise"  # Use PATH
 fi
 
 # Install default programming languages
@@ -22,10 +34,10 @@ if [[ -n "$languages" ]]; then
   for language in $languages; do
     case $language in
     Go)
-      "$HOME/.local/bin/mise" use --global go@latest
+      "$MISE_PATH" use --global go@latest
       ;;
     Python)
-      "$HOME/.local/bin/mise" use --global python@latest
+      "$MISE_PATH" use --global python@latest
       ;;
     esac
   done
