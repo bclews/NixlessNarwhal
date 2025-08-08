@@ -62,3 +62,10 @@ done
 echo ""
 echo "Installation Summary:"
 show_state
+
+echo ""
+echo "🎉 NixlessNarwhal installation completed successfully!"
+echo ""
+
+# Clear the error trap since we completed successfully
+trap - ERR
