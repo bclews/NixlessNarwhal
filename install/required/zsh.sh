@@ -2,7 +2,7 @@
 set -e
 
 # Install zsh
-sudo apt-get install zsh >/dev/null
+sudo apt-get install -y zsh >/dev/null
 
 # Change default shell to zsh
 chsh -s "$(which zsh)" >/dev/null

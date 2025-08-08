@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-sudo apt install -y \
+sudo apt-get install -y \
   build-essential \
   curl \
   apache2-utils \
