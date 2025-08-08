@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v command_exists >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # Check if Neovim is already installed in the expected location
 if [ -x /usr/local/bin/nvim ] && command_exists nvim; then
     return 0

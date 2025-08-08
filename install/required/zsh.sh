@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v apt_package_installed >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # Check if zsh is already installed and configured
 if apt_package_installed zsh && [ "$SHELL" = "$(which zsh)" ] && [ -d "$HOME/.oh-my-zsh" ]; then
     return 0

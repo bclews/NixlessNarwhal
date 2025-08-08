@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v command_exists >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # Check if fastfetch is already installed
 if command_exists fastfetch && apt_package_installed fastfetch; then
     return 0

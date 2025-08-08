@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v apt_package_installed >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # List of required packages
 packages=(
     "build-essential"

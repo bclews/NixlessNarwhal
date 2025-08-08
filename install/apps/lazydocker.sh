@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v command_exists >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # Check if lazydocker is already installed
 if [ -x /usr/local/bin/lazydocker ] && command_exists lazydocker; then
     return 0

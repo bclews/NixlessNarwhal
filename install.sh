@@ -31,20 +31,32 @@ if [ "$HOME" != "$NEW_HOME" ]; then
   source ~/.local/share/NixlessNarwhal/install/required/move-home.sh
 fi
 
-# shellcheck source=install/required/libraries.sh
-install_with_state "libraries" "Required libraries" "source ~/.local/share/NixlessNarwhal/install/required/libraries.sh"
+if ! skip_if_installed "libraries" "Required libraries"; then
+    echo "Installing Required libraries..."
+    # shellcheck source=install/required/libraries.sh
+    source ~/.local/share/NixlessNarwhal/install/required/libraries.sh
+    mark_installed "libraries"
+fi
 
 # echo "Configuring SSH keys, and sets up GitHub for cloning repositories via SSH..."
 # source ~/.local/share/NixlessNarwhal/install/required/git-ssh.sh
 
-# shellcheck source=install/required/zsh.sh
-install_with_state "zsh" "Zsh and Oh My Zsh" "source ~/.local/share/NixlessNarwhal/install/required/zsh.sh"
+if ! skip_if_installed "zsh" "Zsh and Oh My Zsh"; then
+    echo "Installing Zsh and Oh My Zsh..."
+    # shellcheck source=install/required/zsh.sh
+    source ~/.local/share/NixlessNarwhal/install/required/zsh.sh
+    mark_installed "zsh"
+fi
 
 echo "Installing apps..."
 # shellcheck disable=SC1090
 for installer in ~/.local/share/NixlessNarwhal/install/apps/*.sh; do
     app_name=$(basename "$installer" .sh)
-    install_with_state "$app_name" "$(echo "$app_name" | tr '[:lower:]' '[:upper:]')" "source $installer"
+    if ! skip_if_installed "$app_name" "$app_name"; then
+        echo "Installing $app_name..."
+        source "$installer"
+        mark_installed "$app_name"
+    fi
 done
 
 echo ""

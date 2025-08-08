@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Load state management functions if not already loaded
+if ! command -v command_exists >/dev/null 2>&1; then
+    # shellcheck source=../state.sh
+    source ~/.local/share/NixlessNarwhal/install/state.sh
+fi
+
 # Check if Docker is already installed and configured
 if command_exists docker && apt_package_installed docker-ce && user_in_group docker && systemctl is-active docker >/dev/null 2>&1; then
     return 0
