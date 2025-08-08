@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Check if lazydocker is already installed
+if [ -x /usr/local/bin/lazydocker ] && command_exists lazydocker; then
+    return 0
+fi
+
 (
   cd /tmp || exit
   LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')

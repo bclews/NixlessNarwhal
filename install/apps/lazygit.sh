@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Check if lazygit is already installed
+if [ -x /usr/local/bin/lazygit ] && command_exists lazygit; then
+    return 0
+fi
+
 (
   cd /tmp || exit
   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')

@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Check if Neovim is already installed in the expected location
+if [ -x /usr/local/bin/nvim ] && command_exists nvim; then
+    return 0
+fi
+
 (
   cd /tmp || exit
   wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"

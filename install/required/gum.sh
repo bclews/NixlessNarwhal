@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Check if gum is already installed
+if command_exists gum && apt_package_installed gum; then
+    return 0
+fi
+
 (
   # Gum is used for the Omakub commands for tailoring Omakub after the initial install
   cd /tmp || exit
